@@ -15,8 +15,11 @@
       (str y "/" m "/" d))
     nil))
 
+(defn filter-not-closing-day [closing-days]
+  (into (sorted-map) (filter #(= "1" (:closed (fnext %))) closing-days)))
+
 (defn get-json [address]
   "get json from address (address is direct link to json)"
   (let [url (URL. address)]
     (with-open [r (io/reader (.openStream url))]
-      (json/read r))))
+      (json/read r :key-fn keyword))))
