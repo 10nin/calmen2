@@ -4,5 +4,5 @@
 
 (deftest test-get-json
   (testing "get json resrouce from library web site."
-    (is (vector? (get-json "http://www.json.org/JSON_checker/test/pass1.json")))))
+    (is (map? (get-json *TAMA-LIBRARY*)))))
     
