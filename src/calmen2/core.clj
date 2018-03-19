@@ -1,9 +1,9 @@
 (ns calmen2.core
-  (:import (java.net URL HttpURLConnection)))
+  (:require [clojure.data.json :as json]
+            [clojure.java.io :as io])
+  (:import java.net.URL))
 
 (defn get-json [address]
-  (let [conn ^HttpURLConnection (.openConnection (URL. address))
-        stat (.getResponseCode conn)]
-    (if (= stat 200)
-      "OK"
-      nil)))
+  (let [url (URL. address)]
+    (with-open [r (io/reader (.openStream url))]
+      (json/read r))))

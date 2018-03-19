@@ -2,6 +2,7 @@
   (:require [clojure.test :refer :all]
             [calmen2.core :refer :all]))
 
-(deftest get-json-test
+(deftest test-get-json
   (testing "get json resrouce from library web site."
-    (is (string? (get-json "http://www.example.com/")))))
+    (is (vector? (get-json "http://www.json.org/JSON_checker/test/pass1.json")))))
+    
