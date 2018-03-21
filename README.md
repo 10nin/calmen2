@@ -4,7 +4,8 @@
 
 ## Usage
 
-FIXME
+`lein run`
+¢ªcreate ics format files at /tmp directory.
 
 ## License
 
