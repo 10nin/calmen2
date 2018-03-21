@@ -8,12 +8,10 @@
 
 (defn parse-date [date]
   "parse yyyymmdd style string convert to yyyy/mm/dd"
-  (if (= (count date) 8)
-    (let [y (apply str (seq (take 4 date)))
-          m (apply str (seq (take 2 (drop 4 date))))
-          d (apply str (seq (take 2 (drop 6 date))))]
-      (str y "/" m "/" d))
-    nil))
+  (.format
+   (java.text.SimpleDateFormat. "yyyy/mm/dd")
+   (.parse
+    (java.text.SimpleDateFormat. "yyyymmdd") date)))
 
 (defn filter-not-closing-day [closing-days]
   (into (sorted-map) (filter #(= "1" (:closed (fnext %))) closing-days)))
