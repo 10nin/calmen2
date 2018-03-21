@@ -1,6 +1,8 @@
 (ns calmen2.core
   (:require [clojure.data.json :as json]
-            [clojure.java.io :as io])
+            [clojure.java.io :as io]
+            [clj-time.format :as f]
+            [clj-time.core :as t])
   (:import java.net.URL))
 
 (def ^:const ^:dynamic *TAMA-LIBRARY* "https://www.library.metro.tokyo.jp/common/scripts/calendar/tama/data.json")
@@ -47,11 +49,22 @@ END:VEVENT
 (defn filter-not-closing-day [closing-days]
   (into (sorted-map) (filter #(= "1" (:closed (fnext %))) closing-days)))
 
-(defn build-days [closing-days]
-  (->> (keys closing-days)
-       (map #(name %))
-       (map #(parse-date %))))
-  
+(defn get-next-day [day]
+  (let [cf (f/formatter "yyyyMMdd")]
+    (f/unparse cf (t/plus (f/parse cf day) (t/days 1)))))
+
+(defn build-days
+  ([g closing-days]
+   (->> (keys closing-days)
+        (map #(name %))
+        (map #(g %))
+        (map #(parse-date %))))
+  ([closing-days]
+   (build-days identity closing-days)))
+
+(defn get-next-days [closing-days]
+  (build-days get-next-day closing-days))
+
 (defn get-json [address]
   "get json from address (address is direct link to json)"
   (let [url (URL. address)]
