@@ -18,5 +18,28 @@
 <!-- Place your content here -->
 <!-- SCRIPTS -->
 <!-- Example: <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
+<table >
+  <tbody>
+    <tr>
+      <th colspan="7">{{month}}</th>
+    </tr>
+    <tr>
+      <td>日</td>
+      <td>月</td>
+      <td>火</td>
+      <td>水</td>
+      <td>木</td>
+      <td>金</td>
+      <td>土</td>
+    </tr>
+    {% for w in weeks %}
+    <tr>
+      {% for m in w %}
+      <td>{{m}}</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 </body>
 </html>
